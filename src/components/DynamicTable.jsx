@@ -11,12 +11,24 @@ import Paper from '@mui/material/Paper';
 
 export default function DynamicTable({
   data,
-  flip = false,
-  onEntryClick = () => {}
+  numFilterKeys = 0,
+  onEntryClick = () => {},
+  // checkedBoxes = [],
+  // urls
 }) {
+
   const headers = useMemo(() => {
     return [...new Set(data.flatMap((entry) => Object.keys(entry)))];
   }, [data]);
+
+  // const headers = useMemo(() => {
+  //   const allHeaders = [...new Set(data.flatMap((entry) => Object.keys(entry)))];
+  //   const checkedHeaders = checkedBoxes.flatMap((checkedBox) => {
+  //     return (urls.find((url) => url.label === checkedBox).headers);
+  //   });
+  //   if (checkedBoxes.length > 1) return [...new Set([...allHeaders, ...checkedHeaders])];
+  //   else return allHeaders;
+  // }, [data, checkedBoxes]);
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -36,13 +48,6 @@ export default function DynamicTable({
   }));
 
   const StyledTableRow = styled(TableRow)(({ theme , index , /*flip*/}) => ({
-    // backgroundColor: flip ? 
-    //   ( index < 2 
-    //     ? theme.palette.background.alt
-    //     : (index >= 2 
-    //       ? theme.palette.primary[300] 
-    //       : theme.palette.primary[100])
-    //   ) 
       backgroundColor:
         index % 2 
         ? theme.palette.primary[300]
@@ -51,33 +56,6 @@ export default function DynamicTable({
       border: 0,
     },
   }));
-
-  // if (flip) {
-  //   return (
-  //     <TableContainer
-  //     sx={{ 
-  //       m: "1rem 2rem",
-  //       borderRadius: "5px"
-  //     }} 
-  //     component={Paper}>
-  //       <Table
-  //       sx={{ minWidth: 700 }} aria-label="custom table">
-  //       {headers.map((headerName, index) => (
-  //         <StyledTableRow index={index} /*flip={flip}*/>
-  //            <TableHead><StyledTableCell>{headerName.toUpperCase()}</StyledTableCell></TableHead>
-  //           {data.map((entry) => (
-  //             <StyledTableCell onClick={ () => onEntryClick( entry )}> { 
-  //               index > 2 
-  //                 ? Number(entry[headerName]).toFixed(2)
-  //                 : entry[headerName] } 
-  //             </StyledTableCell>
-  //           ))}
-  //         </StyledTableRow>
-  //       ))}
-  //       </Table>
-  //     </TableContainer>
-  //   );
-  // }
 
   return (
     <TableContainer 
@@ -100,11 +78,13 @@ export default function DynamicTable({
             <StyledTableRow index = {index} /*flip = {false}*/ key={entry}>
               {headers.map((headerName, headerIndex) => (
                 <StyledTableCell onClick={ () => onEntryClick( entry ) } align="left">
-                  { headerIndex < 2 
-                    ? entry[headerName] 
-                    : Math.abs(Number(entry[headerName])) < 0.01
-                      ? Number(entry[headerName]).toExponential(2)
-                      : Number(entry[headerName]).toFixed(2) }
+                  {headerIndex < numFilterKeys
+                    ? (isNaN(parseInt(entry[headerName]))
+                        ? 'Invalid integer'
+                        : parseInt(entry[headerName]))
+                    : (Math.abs(Number(entry[headerName])) < 0.01 && Number(entry[headerName]) !== 0
+                        ? Number(entry[headerName]).toExponential(2)
+                        : Number(entry[headerName]).toFixed(2))}
                 </StyledTableCell>
               ))}
             </StyledTableRow>
