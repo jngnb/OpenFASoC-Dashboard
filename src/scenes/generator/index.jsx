@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Modal, Button } from 'react-bootstrap';
 import useGithubCsv from "hooks/useGithubCsv";
 import DynamicTable from "components/DynamicTable";
 import Header from "components/Header";
@@ -12,7 +13,13 @@ export default function Generator({ name, urls, filterKeys = [], generateSummary
   );
 
   const [headerValues, setHeaderValues] = useState({});
+  const [showModal, setShowModal] = useState(false);
 
+  const handleModal = () => {
+    setShowModal(!showModal);
+  }
+  
+  
   if (loading) return null;
 
   return (

@@ -27,19 +27,17 @@ const generators = [
               (entry) => entry.inverter === inverter && entry.header === header
             );
             const maxAbsError = Math.max(
-              ...entries.map(({ error }) => Math.abs(+error))
+              ...entries.filter(({ error }) => !isNaN(error)).map(({ error }) => Math.abs(+error))
             );
-            const maxError = entries.find(
-              ({ error }) => Math.abs(error) === maxAbsError
-            ).error;
+            const maxErrorEntry = entries.find(({ error }) => Math.abs(error) === maxAbsError);
+            const maxError = maxErrorEntry ? maxErrorEntry.error : null;
             return {
               inverter: inverter,
               header,
               frequency20_1: entry20[0].freq,
-              ...(entry20.length > 1 && { frequency20_2: entry20[1].freq }),
+              ...(entry20.length > 1 && { frequency20_2: entry20[1].freq}),
               power20_1: entry20[0].power,
-              ...(entry20.length > 1 && { power20_2: entry20[1].power }),
-              //power20: entry20.power,
+              ...(entry20.length > 1 && { power20_2: entry20[1].power}),
               maxError
             };
           }

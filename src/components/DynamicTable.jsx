@@ -78,13 +78,14 @@ export default function DynamicTable({
             <StyledTableRow index = {index} /*flip = {false}*/ key={entry}>
               {headers.map((headerName, headerIndex) => (
                 <StyledTableCell onClick={ () => onEntryClick( entry ) } align="left">
-                  {headerIndex < numFilterKeys
-                    ? (isNaN(parseInt(entry[headerName]))
-                        ? 'Invalid integer'
-                        : parseInt(entry[headerName]))
-                    : (Math.abs(Number(entry[headerName])) < 0.01 && Number(entry[headerName]) !== 0
+                  {!isNaN(parseInt(entry[headerName]))
+                    ? headerIndex < numFilterKeys
+                      ? (isNaN(parseInt(entry[headerName])) ? 'Invalid integer' : parseInt(entry[headerName]))
+                      : (Math.abs(Number(entry[headerName])) < 0.01 && Number(entry[headerName]) !== 0
                         ? Number(entry[headerName]).toExponential(2)
-                        : Number(entry[headerName]).toFixed(2))}
+                        : Number(entry[headerName]).toFixed(2))
+                    : entry[headerName]
+                  }
                 </StyledTableCell>
               ))}
             </StyledTableRow>
@@ -95,51 +96,4 @@ export default function DynamicTable({
   );
 
 }
-
-
-// export default function DynamicTable({
-//   data,
-//   flip = false,
-//   onEntryClick = () => {}
-// }) {
-//   const headers = useMemo(() => {
-//     return [...new Set(data.flatMap((entry) => Object.keys(entry)))];
-//   }, [data]);
-
-//   if (flip) {
-//     return (
-//       <table>
-//         {headers.map((headerName) => (
-//           <tr>
-//             <th>{headerName}</th>
-//             {data.map((entry) => (
-//               <td onClick={() => onEntryClick(entry)}>{entry[headerName]}</td>
-//             ))}
-//           </tr>
-//         ))}
-//       </table>
-//     );
-//   }
-
-//   return (
-//     <table>
-//       <thead>
-//         <tr>
-//           {headers.map((headerName) => (
-//             <th>{headerName}</th>
-//           ))}
-//         </tr>
-//       </thead>
-//       <tbody>
-//         {data.map((entry) => (
-//           <tr onClick={() => onEntryClick(entry)}>
-//             {headers.map((headerName) => (
-//               <td>{entry[headerName]}</td>
-//             ))}
-//           </tr>
-//         ))}
-//       </tbody>
-//     </table>
-//   );
-// }
 
