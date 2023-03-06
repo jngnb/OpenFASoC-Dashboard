@@ -1,3 +1,15 @@
+<img width="1455" alt="Screenshot 2023-03-06 at 2 33 33 PM" src="https://user-images.githubusercontent.com/94323282/223212270-73a86032-c5eb-4017-8a9c-c9ae4df733df.png">
+
+<img width="1485" alt="Screenshot 2023-03-06 at 2 33 42 PM" src="https://user-images.githubusercontent.com/94323282/223212279-6a801011-0a34-45d6-b0cd-d856708ffddc.png">
+
+Working on:
+- Graphs/charts
+- Display as pre-pex, post-pex detail table as columns
+
+Todo:
+- Add units (runtime in min)
+- Edit header titles
+- Implement other generators (need data csv)
 
 # Getting Started with Create React App
 
