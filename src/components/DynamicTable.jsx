@@ -11,16 +11,20 @@ import Paper from '@mui/material/Paper';
 
 export default function DynamicTable({
   data,
+  urlLabels,
   numFilterKeys = 0,
   onEntryClick = () => {},
-  // checkedBoxes = [],
-  // urls
 }) {
 
   const headers = useMemo(() => {
     return [...new Set(data.flatMap((entry) => Object.keys(entry)))];
   }, [data]);
+  console.log(headers)
+  console.log(urlLabels)
+  data = data.map((entry, index) => ({...entry, id: index}));
 
+  const colSpan = (headers && urlLabels && (headers.length - numFilterKeys) / urlLabels.length);
+  
   // const headers = useMemo(() => {
   //   const allHeaders = [...new Set(data.flatMap((entry) => Object.keys(entry)))];
   //   const checkedHeaders = checkedBoxes.flatMap((checkedBox) => {
@@ -33,25 +37,27 @@ export default function DynamicTable({
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.background.alt,
-      color: theme.palette.secondary[100],
+      color: theme.palette.secondary.main,
       fontSize: 12,
       border: "none",
-      width: "80px",
+      minWidth: "50px",
+      width: "auto"
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 12,
       padding: "10px",
       border: "none",
-      width: "80px",
+      minWidth: "50px",
+      width: "auto",
       paddingLeft: "20px"
     },
   }));
 
-  const StyledTableRow = styled(TableRow)(({ theme , index , /*flip*/}) => ({
+  const StyledTableRow = styled(TableRow)(({ theme , index }) => ({
       backgroundColor:
         index % 2 
-        ? theme.palette.primary[300]
-        : theme.palette.primary[400],
+        ? theme.palette.tableRow.cell1
+        : theme.palette.tableRow.cell2,
     '&:last-child td, &:last-child th': {
       border: 0,
     },
@@ -60,24 +66,57 @@ export default function DynamicTable({
   return (
     <TableContainer 
       sx ={{ 
-        m: "1rem 2rem",
         borderRadius: "5px"
       }} 
       component={Paper}>
       <Table 
-        sx={{ minWidth: 520 }} aria-label="custom table">
+        sx={{ minWidth: 520, whiteSpace: "pre-line" }} aria-label="custom table">
         <TableHead>
+        { urlLabels.length > 1 
+        ? 
+        <TableRow>{
+        Array.from({ length: numFilterKeys + urlLabels.length }).map((_, i) => {
+          const colSpan = (headers.length - numFilterKeys) / urlLabels.length
+          if (i >= numFilterKeys && i - numFilterKeys < urlLabels.length) {
+            return (
+              <StyledTableCell style={{ textAlign: "center" }} colSpan={colSpan} key={i}>
+                {urlLabels[i - numFilterKeys]}
+              </StyledTableCell>
+            );
+          } else {
+            return <StyledTableCell key={i} />;
+          }
+        })}
+        </TableRow> 
+        : null }
           <TableRow>
-            {headers.map((headerName) => (
-              <StyledTableCell>{ headerName.toUpperCase() }</StyledTableCell>
-            ))}
+          {headers.map((headerName, index) => {
+            if (headerName.includes('_')) {
+              headerName = headerName.replace("_", " ");
+              const regex = /_\d+$/;
+              if (regex.test(headerName) && urlLabels.length >= 1) {
+                headerName = headerName.replace(regex, "");
+              }
+            }
+            headerName = headerName.split(' ').map(word => {
+              return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            }).join(' ');
+            return (
+              <StyledTableCell key={index}>
+                { headerName }
+              </StyledTableCell>
+            );
+          })}
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((entry, index) => (
-            <StyledTableRow index = {index} /*flip = {false}*/ key={entry}>
+            <StyledTableRow index={index} key={entry.id}>
               {headers.map((headerName, headerIndex) => (
-                <StyledTableCell onClick={ () => onEntryClick( entry ) } align="left">
+                <StyledTableCell 
+                  key={`${entry.id}-${headerIndex}`} 
+                  onClick={ () => onEntryClick( entry ) } 
+                  align="left">
                   {!isNaN(parseInt(entry[headerName]))
                     ? headerIndex < numFilterKeys
                       ? (isNaN(parseInt(entry[headerName])) ? 'Invalid integer' : parseInt(entry[headerName]))

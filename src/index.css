@@ -5,7 +5,12 @@ body,
 
 #root,
 .app {
-  height: 100%;
-  width: 100%;
   font-family: "Inter", sans-serif;
 }
+
+.modal-dialog {
+  max-width: 80% !important;
+  max-height: 90% !important;
+}
+
+

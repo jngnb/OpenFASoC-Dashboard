@@ -4,7 +4,7 @@ import csv from "csvtojson";
 
 
 export default function useGithubCsv(
-  urls,
+  selectedUrls,
   filterKeys = [],
   generateSummary = () => {}
 ) {
@@ -15,20 +15,20 @@ export default function useGithubCsv(
   useEffect(() => {
     async function fetchDataFromGithub() {
       setLoading(true);
-      const responses = await Promise.all(urls.map(url => fetch(url)));
+      const responses = await Promise.all(selectedUrls.map(url => fetch(url)));
       const responseData = await Promise.all(responses.map(resp => resp.text()));
       const responseJsonData = await Promise.all(responseData.map(respData => csv().fromString(respData)));
       setData(responseJsonData.flat());
       setLoading(false);
     }
     fetchDataFromGithub();
-  }, [urls]);
+  }, [selectedUrls]);
 
   const summaryData = useMemo(() => {
     if (data === null) return null;
-    const internalData = generateSummary(data);
+    const internalData = generateSummary(data, selectedUrls.length);
     return internalData;
-  }, [data, generateSummary]);
+  }, [data, generateSummary, selectedUrls]);
 
   const detailData = useMemo(() => {
     if (data === null) return null;

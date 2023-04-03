@@ -10,7 +10,7 @@ import {
 import FlexBetween from 'components/FlexBetween';
 import { useDispatch } from 'react-redux';
 import { setMode } from 'state';
-import profileImage from "assets/profile.jpeg";
+
 import {
     AppBar,
     Button,
@@ -40,14 +40,14 @@ const Navbar = ({
             boxShadow: "none",
         }}
         >
-            <Toolbar sx = {{ justifyContent: "space-between" }}>
+            <Toolbar sx = {{justifyContent: "space-between" }}>
 
                 { /* LEFT SIDE */}
                 <FlexBetween>
                     <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                         <MenuIcon/>
                     </IconButton>
-                    <FlexBetween
+                    {/* <FlexBetween
                         backgroundColor = {theme.palette.background.alt}
                         borderRadius = "9px"
                         gap = "3rem"
@@ -56,11 +56,11 @@ const Navbar = ({
                         <IconButton>
                             <Search/>
                         </IconButton>
-                    </FlexBetween>
+                    </FlexBetween> */}
                 </FlexBetween>
 
                 {/* RIGHT SIDE */}
-                <FlexBetween gap = "1.5rem">
+                <FlexBetween gap = "1.5rem" sx={{ml: "auto"}}>
                     <IconButton onClick={() => dispatch(setMode())}>
                         {theme.palette.mode === "dark" ? (
                             <DarkModeOutlined sx = {{ fontSize: "25px" }} />

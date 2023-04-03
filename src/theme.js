@@ -4,6 +4,7 @@ export const tokensDark = {
       0: "#ffffff", // manually adjusted
       10: "#f6f6f6", // manually adjusted
       50: "#f0f0f0", // manually adjusted
+      150: "#e9e9e9",
       100: "#e0e0e0",
       200: "#c2c2c2",
       300: "#a3a3a3",
@@ -63,9 +64,8 @@ export const tokensDark = {
   export const themeSettings = (mode) => {
     return {
       palette: {
-        mode: mode,
-        ...(mode === "dark"
-          ? {
+        mode: mode, ...(mode === "dark" ? 
+        {
               // palette values for dark mode
               primary: {
                 ...tokensDark.primary,
@@ -79,6 +79,10 @@ export const tokensDark = {
               neutral: {
                 ...tokensDark.grey,
                 main: tokensDark.grey[500],
+              },
+              tableRow: {
+                cell1: tokensDark.primary[400],
+                cell2: tokensDark.primary[300],
               },
               background: {
                 default: tokensDark.primary[600],
@@ -100,6 +104,10 @@ export const tokensDark = {
               neutral: {
                 ...tokensLight.grey,
                 main: tokensDark.grey[500],
+              },
+              tableRow: {
+                cell1: tokensDark.grey[100],
+                cell2: tokensDark.grey[200],
               },
               background: {
                 default: tokensDark.grey[0],
