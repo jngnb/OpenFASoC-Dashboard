@@ -73,20 +73,12 @@ const generators = [
           url: "https://raw.githubusercontent.com/idea-fasoc/OpenFASOC-sims/main/latest/data_prePEX.csv",
         },
       ],
-      // url:
-      //   "https://raw.githubusercontent.com/idea-fasoc/OpenFASOC/main/openfasoc/generators/temp-sense-gen/models/modelfile_PEX.csv"
   }
 ];
 
 export default function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  // const [selectedUrl, setSelectedUrl] = useState(generators[0].urls[0].url);
-
-  // function handleUrlChange(event) {
-  //   setSelectedUrl(event.target.value);
-  // }
-
   return (
     <div className="app">
     <BrowserRouter>
@@ -95,7 +87,7 @@ export default function App() {
       <Routes>
         <Route element={<Layout/>}>
           <Route 
-          path="/" 
+          path="/OpenFASoC-Dashboard" 
           element={<Navigate to={`/${generators[0].path}`} />} />
             {generators.map((generator, index) => (
               <Route
