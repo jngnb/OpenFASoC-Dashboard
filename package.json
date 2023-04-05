@@ -9,16 +9,16 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.6",
     "@mui/x-data-grid": "^5.17.20",
-    "@nivo/bar": "^0.55.0",
-    "@nivo/core": "^0.55.0",
-    "@nivo/geo": "^0.55.0",
-    "@nivo/pie": "^0.55.0",
+    "@nivo/bar": "^0.80.0",
+    "@nivo/core": "^0.80.0",
+    "@nivo/geo": "^0.80.0",
+    "@nivo/pie": "^0.80.0",
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.3",
-    "d3": "^7.8.2",
+    "d3": "^7.8.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-datepicker": "^4.8.0",
@@ -29,10 +29,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -53,8 +53,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^5.0.0"
   }
 }
