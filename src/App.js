@@ -87,7 +87,7 @@ export default function App() {
       <Routes>
         <Route element={<Layout/>}>
           <Route 
-          path="/OpenFASoC-Dashboard" 
+          path="/OpenFASoC-Dashboard/" 
           element={<Navigate to={`/${generators[0].path}`} />} />
             {generators.map((generator, index) => (
               <Route
