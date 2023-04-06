@@ -38,6 +38,8 @@ export default function DynamicTable({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.background.alt,
       color: theme.palette.secondary.main,
+      padding: urlLabels.length > 1 ? "12px" : "14px",
+      paddingLeft: urlLabels.length > 1 ? "16px" : "18px",
       fontSize: 12,
       border: "none",
       minWidth: "50px",
@@ -45,11 +47,11 @@ export default function DynamicTable({
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 12,
-      padding: "10px",
+      padding: urlLabels.length > 1 ? "9px" : "10px",
       border: "none",
       minWidth: "50px",
       width: "auto",
-      paddingLeft: "20px"
+      paddingLeft: urlLabels.length > 1 ? "16px" : "18px"
     },
   }));
 
@@ -70,7 +72,7 @@ export default function DynamicTable({
       }} 
       component={Paper}>
       <Table 
-        sx={{ minWidth: 520, whiteSpace: "pre-line" }} aria-label="custom table">
+        sx={{ minWidth: 400, whiteSpace: "pre-line" }} aria-label="custom table">
         <TableHead>
         { urlLabels.length > 1 
         ? 

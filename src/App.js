@@ -48,8 +48,8 @@ const generators = [
             return {
               inverter: inverter,
               header,
-              ambient_freq_1: entry20[0].freq,
-              ...(entry20.length > 1 && { ambient_freq_2: entry20[1].freq}),
+              ambient_frequency_1: entry20[0].freq,
+              ...(entry20.length > 1 && { ambient_frequency_2: entry20[1].freq}),
               ambient_power_1: entry20[0].power,
               ...(entry20.length > 1 && { ambient_power_2: entry20[1].power}),
               maximum_error_1: maximum_errors[0],

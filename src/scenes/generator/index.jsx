@@ -153,22 +153,6 @@ export default function Generator({ name, urls, filterKeys = [], detailFilterKey
             }}
           />
         </div>
-        {/* {summaryData &&
-          <div style={{ flex: selectedUrls.length > 1 ? '1 0 50%' : '1 0 80%', flexDirection: 'column'}}>
-            <div style={{ flex: '1 1 50%' }}>
-            <SummaryGraph 
-              data={summaryData}
-              />
-            </div>
-            <div style={{ flex: '1 1 50%' }}>
-              <ModalGraph
-              data={summaryData}
-              column="max_error"
-              detailFilterKey="inverter"
-              />
-            </div>
-          </div>
-        } */}
         <div style={{ display: "flex", flex: '1 0 70%', flexDirection: 'column', justifyContent: "center" }}>
           <div style={{ flexBasis: "50%" }}>
             {summaryData && 

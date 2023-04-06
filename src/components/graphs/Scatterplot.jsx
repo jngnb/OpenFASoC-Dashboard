@@ -34,7 +34,7 @@ const Scatterplot = ({ width, height, data, xAxis, yAxis, groupBy}) =>
 
   const xScale = d3
     .scaleLinear()
-    .domain([d3.min(data, d => Number(d.ambient_freq_1)), d3.max(data, d => Number(d.ambient_freq_1))])
+    .domain([d3.min(data, d => Number(d.ambient_frequency_1)), d3.max(data, d => Number(d.ambient_frequency_1))])
     .range([0, boundsWidth]);
 
   const group = [...new Set(data.map(d => d[groupBy]))]
@@ -49,14 +49,14 @@ const Scatterplot = ({ width, height, data, xAxis, yAxis, groupBy}) =>
       <circle
         key={i}
         r={8}
-        cx={xScale(d.ambient_freq_1)}
+        cx={xScale(d.ambient_frequency_1)}
         cy={yScale(d.ambient_power_1)}
         stroke={colorScale(d[groupBy])}
         fill={colorScale(d[groupBy])}
         fillOpacity={0.7}
         onMouseEnter={() =>
           setHovered({
-            xPos: Number(xScale(d.ambient_freq_1)),
+            xPos: Number(xScale(d.ambient_frequency_1)),
             yPos: Number(yScale(d.ambient_power_1)),
             name: `inverter: ${d.inverter}\n` + 
                   `header: ${d.header}`,

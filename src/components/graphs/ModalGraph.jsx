@@ -4,6 +4,8 @@ import * as d3 from 'd3';
 
 function Graph({ data, column, detailFilterKey }) {
   const svgRef = useRef();
+  // const parentRect = svgRef.current.parentElement.getBoundingClientRect();
+
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const theme = useTheme();
 
@@ -15,11 +17,6 @@ function Graph({ data, column, detailFilterKey }) {
   useEffect(() => {
     updateDimensions();
     const svg = d3.select(svgRef.current);
-    // const parentRect = svgRef.current.parentElement.getBoundingClientRect();
-    // setDimensions({ width: parentRect.width, height: parentRect.height });
-    // console.log(parentRect.width);
-    // console.log(parentRect.height);
-
     svg.selectAll('.dot').remove();
     svg.selectAll('.line').remove();
     svg.selectAll('.x-axis').remove();
@@ -107,7 +104,7 @@ function Graph({ data, column, detailFilterKey }) {
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [data, column, detailFilterKey, dimensions]);
+  }, [data, column, detailFilterKey, dimensions.width, dimensions.height]);
 
   return <svg ref={svgRef} width="100%" height="100%" />;
 }
