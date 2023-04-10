@@ -24,26 +24,31 @@ export default function DynamicTable({
   data = data.map((entry, index) => ({...entry, id: index}));
 
   const colSpan = (headers && urlLabels && (headers.length - numFilterKeys) / urlLabels.length);
-  
-  // const headers = useMemo(() => {
-  //   const allHeaders = [...new Set(data.flatMap((entry) => Object.keys(entry)))];
-  //   const checkedHeaders = checkedBoxes.flatMap((checkedBox) => {
-  //     return (urls.find((url) => url.label === checkedBox).headers);
-  //   });
-  //   if (checkedBoxes.length > 1) return [...new Set([...allHeaders, ...checkedHeaders])];
-  //   else return allHeaders;
-  // }, [data, checkedBoxes]);
 
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  const StyledTableCell = styled(TableCell)(({ theme, index }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.background.alt,
       color: theme.palette.secondary.main,
       padding: urlLabels.length > 1 ? "12px" : "14px",
-      paddingLeft: urlLabels.length > 1 ? "16px" : "18px",
       fontSize: 12,
-      border: "none",
+      borderBottom: "2px solid",
       minWidth: "50px",
-      width: "auto"
+      width: "auto",
+      textAlign: "center",
+      [`&:nth-of-type(${numFilterKeys + colSpan + 1})`]: {
+        borderLeft: "2px solid",
+        borderColor: theme.palette.background.default,
+
+        // borderColor: theme.palette.background.dafault,
+      },
+      [`&:nth-of-type(${numFilterKeys+1})`]: {
+        borderLeft: "2px solid",
+        borderColor: theme.palette.background.default,
+
+        // borderColor: theme.palette.background.dafault,
+      },
+      borderColor: theme.palette.background.default,
+
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 12,
@@ -51,15 +56,43 @@ export default function DynamicTable({
       border: "none",
       minWidth: "50px",
       width: "auto",
-      paddingLeft: urlLabels.length > 1 ? "16px" : "18px"
+      textAlign: "center",
+      // paddingLeft: urlLabels.length > 1 ? "16px" : "18px",
+      // [`&:nth-of-type(${colSpan}n+${numFilterKeys+1})`]: {
+      //   backgroundColor: theme.palette.tableCol.col1,
+      // },
+      // [`&:nth-of-type(${colSpan}n+${numFilterKeys+2})`]: {
+      //   backgroundColor: theme.palette.tableCol.col2,
+      // },
+      // [`&:nth-of-type(${colSpan}n+${numFilterKeys+3})`]: {
+      //   backgroundColor: theme.palette.tableCol.col3,
+      // },
+      // [`&:nth-child(${colSpan}n+${numFilterKeys+4})`]: {
+      //   backgroundColor: theme.palette.tableCol.col4,
+      // },
+      [`&:nth-of-type(${numFilterKeys + colSpan + 1})`]: {
+        borderLeft: "2px solid",
+        borderColor: theme.palette.background.default,
+      },
+      [`&:nth-of-type(${numFilterKeys+1})`]: {
+        borderLeft: "2px solid",
+        borderColor: theme.palette.background.default,
+      },
+      [`&:nth-of-type(-n+${numFilterKeys})`]: {
+        backgroundColor: theme.palette.background.alt,
+        color: theme.palette.secondary.main,
+      },
+      borderColor: theme.palette.background.default,
+
+
     },
   }));
 
   const StyledTableRow = styled(TableRow)(({ theme , index }) => ({
       backgroundColor:
         index % 2 
-        ? theme.palette.tableRow.cell1
-        : theme.palette.tableRow.cell2,
+        ? theme.palette.tableRow.row1
+        : theme.palette.tableRow.row2,
     '&:last-child td, &:last-child th': {
       border: 0,
     },
@@ -74,11 +107,12 @@ export default function DynamicTable({
       <Table 
         sx={{ minWidth: 400, whiteSpace: "pre-line" }} aria-label="custom table">
         <TableHead>
-        { urlLabels.length > 1 
-        ? 
+        { (urlLabels.length > 1) ? 
+        // Heading 1
+        // EX: PRE-PEX vs POST-PEX
         <TableRow>{
         Array.from({ length: numFilterKeys + urlLabels.length }).map((_, i) => {
-          const colSpan = (headers.length - numFilterKeys) / urlLabels.length
+          // const colSpan = (headers.length - numFilterKeys) / urlLabels.length
           if (i >= numFilterKeys && i - numFilterKeys < urlLabels.length) {
             return (
               <StyledTableCell style={{ textAlign: "center" }} colSpan={colSpan} key={i}>
@@ -91,26 +125,29 @@ export default function DynamicTable({
         })}
         </TableRow> 
         : null }
-          <TableRow>
-          {headers.map((headerName, index) => {
-            if (headerName.includes('_')) {
-              headerName = headerName.replace("_", " ");
-              const regex = /_\d+$/;
-              if (regex.test(headerName) && urlLabels.length >= 1) {
-                headerName = headerName.replace(regex, "");
-              }
+        {/* Heading 2
+            EX: Inverter, Header, ... , Maximum Error */}
+        <TableRow>
+        {headers.map((headerName, index) => {
+          if (headerName.includes('_')) {
+            headerName = headerName.replace("_", " ");
+            const regex = /_\d+$/;
+            if (regex.test(headerName) && urlLabels.length >= 1) {
+              headerName = headerName.replace(regex, "");
             }
-            headerName = headerName.split(' ').map(word => {
-              return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-            }).join(' ');
-            return (
-              <StyledTableCell key={index}>
-                { headerName }
-              </StyledTableCell>
-            );
-          })}
-          </TableRow>
+          }
+          headerName = headerName.split(' ').map(word => {
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+          }).join(' ');
+          return (
+            <StyledTableCell key={index}>
+              { headerName }
+            </StyledTableCell>
+          );
+        })}
+        </TableRow>
         </TableHead>
+        {/* Body (Number Data) */}
         <TableBody>
           {data.map((entry, index) => (
             <StyledTableRow index={index} key={entry.id}>

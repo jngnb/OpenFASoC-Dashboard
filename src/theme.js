@@ -22,7 +22,7 @@ export const tokensDark = {
       200: "#a6a9be",
       300: "#7a7f9d",
       400: "#4d547d",
-      500: "#21295c",
+      500: "#212962",
       600: "#191F45", // manually adjusted
       700: "#141937",
       800: "#0d1025",
@@ -81,8 +81,14 @@ export const tokensDark = {
                 main: tokensDark.grey[500],
               },
               tableRow: {
-                cell1: tokensDark.primary[400],
-                cell2: tokensDark.primary[300],
+                row1: tokensDark.primary[400],
+                row2: tokensDark.primary[300],
+              },
+              tableCol: {
+                col1: tokensDark.primary[400],
+                col2: tokensDark.primary[300],
+                col3: tokensDark.primary[200],
+                col4: tokensDark.primary[100],
               },
               background: {
                 default: tokensDark.primary[600],
@@ -98,16 +104,21 @@ export const tokensDark = {
               },
               secondary: {
                 ...tokensLight.secondary,
-                main: tokensDark.secondary[600],
-                light: tokensDark.secondary[700],
+                main: tokensDark.secondary[700],
               },
               neutral: {
                 ...tokensLight.grey,
                 main: tokensDark.grey[500],
               },
               tableRow: {
-                cell1: tokensDark.grey[100],
-                cell2: tokensDark.grey[200],
+                row1: tokensDark.grey[100],
+                row2: tokensDark.grey[200],
+              },
+              tableCol: {
+                col1: tokensDark.grey[100],
+                col2: tokensDark.grey[200],
+                col3: tokensDark.grey[300],
+                col4: tokensDark.grey[400],
               },
               background: {
                 default: tokensDark.grey[0],

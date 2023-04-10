@@ -7,6 +7,8 @@ import Header from "components/Header";
 import ModalGraph from "components/graphs/ModalGraph"
 import 'bootstrap/dist/css/bootstrap.min.css';  
 import Scatterplot from "components/graphs/Scatterplot"
+import Scatterplot2 from "components/graphs/Scatterplot2"
+
 
 
 export default function Generator({ name, urls, filterKeys = [], detailFilterKey, generateSummary = () => {}}) {
@@ -102,7 +104,6 @@ export default function Generator({ name, urls, filterKeys = [], detailFilterKey
                   return 0;
                 }
               }).reduce((obj, key) => {
-                console.log(obj)
                 obj[key] = summary[key];
                 return obj;
               }, {}))
@@ -156,14 +157,17 @@ export default function Generator({ name, urls, filterKeys = [], detailFilterKey
         <div style={{ display: "flex", flex: '1 0 70%', flexDirection: 'column', justifyContent: "center" }}>
           <div style={{ flexBasis: "50%" }}>
             {summaryData && 
-            (<Scatterplot width={500} height={400} data={summaryData} 
+            (<Scatterplot width={500} height={350} data={summaryData} 
                           xAxis="Frequency (Hz)" yAxis="Power (μW)" groupBy="inverter" />)}
           </div>
           <div style={{ flexBasis: "50%" }}>
-            <ModalGraph
+            <Scatterplot2
+              width={500}
+              height={300}
               data={summaryData}
-              column="maximum_error"
-              detailFilterKey="inverter"
+              xAxis="Inverter"
+              yAxis="Header"
+              groupBy="inverter"
             />
           </div>
         </div>
