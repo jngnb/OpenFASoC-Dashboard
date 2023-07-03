@@ -65,12 +65,12 @@ const generators = [
         {
           id: 1,
           label: "POST-PEX",
-          url: "https://raw.githubusercontent.com/idea-fasoc/OpenFASOC-sims/main/latest/data_postPEX.csv",
+          url: "http://34.133.230.172:8080/data_postPEX",
         },
         {
           id: 2,
           label: "PRE-PEX",
-          url: "https://raw.githubusercontent.com/idea-fasoc/OpenFASOC-sims/main/latest/data_prePEX.csv",
+          url: "http://34.133.230.172:8080/data_prePEX",
         },
       ],
   }
