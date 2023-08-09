@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://jngnb.github.io/OpenFASoC-Dashboard/",
+  "homepage": "https://idea-fasoc.github.io/OpenFASoC-Dashboard/",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",

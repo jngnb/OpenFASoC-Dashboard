@@ -11,13 +11,14 @@ import Scatterplot2 from "components/graphs/Scatterplot2"
 
 
 
-export default function Generator({ name, urls, filterKeys = [], detailFilterKey, generateSummary = () => {}}) {
+export default function Generator({ name, urls,idToken, filterKeys = [], detailFilterKey, generateSummary = () => {}}) {
   const [selectedUrls, setSelectedUrls] = useState([urls[0].url]);
   const [selectedLabels, setSelectedLabels] = useState([urls[0].label]);
   const { summaryData, detailData, setDetailParams, loading } = useGithubCsv(
     selectedUrls,
+    idToken,
     filterKeys,
-    generateSummary
+    generateSummary,
   );
 
   const columnNames = detailData?.length 
